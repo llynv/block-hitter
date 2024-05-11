@@ -6,14 +6,16 @@ using UnityEngine.UI;
 
 public class UpBallDetecter : Detecter
 {
-   protected override void BallPop ()
+   protected override void BallPop()
    {
-      if (Input.GetKeyDown(KeyCode.UpArrow)) {
-         CalculateScore();
+      if (Input.GetKeyDown(KeyCode.UpArrow))
+      {
+         PressUpdateScore();
       }
    }
 
-   private void Update() {
+   private void Update()
+   {
       BallPop();
    }
 }

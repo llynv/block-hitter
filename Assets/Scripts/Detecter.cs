@@ -22,6 +22,7 @@ public abstract class Detecter : MonoBehaviour
    private GameObject ball;
    private Shooter shooter;
    private bool isPoisonBall = false;
+   private bool isActive = true;
 
    private void Start()
    {
@@ -69,13 +70,25 @@ public abstract class Detecter : MonoBehaviour
       player.Score += scoreDict[score];
    }
 
-   protected void CalculateScore()
+   protected void PressUpdateScore()
    {
+      StartCoroutine(CalculateScore());
+   }
+
+   IEnumerator CalculateScore()
+   {
+      if (!isActive) yield break;
+
       if (!IsCollapsing)
       {
          Debug.Log("Miss");
          UpdateScore("Miss");
-         return;
+
+         isActive = false;
+         player.GetComponent<SpriteRenderer>().color = Color.red;
+         yield return new WaitForSeconds(1.5f);
+         isActive = true;
+         player.GetComponent<SpriteRenderer>().color = Color.white;
       }
 
       shooter.RemoveBall(ball.GetComponent<Ball>());
@@ -84,7 +97,7 @@ public abstract class Detecter : MonoBehaviour
       if (isPoisonBall)
       {
          UpdateScore("Poison");
-         return;
+         yield break;
       }
 
       float scaleDistance = CalculateDistance();
