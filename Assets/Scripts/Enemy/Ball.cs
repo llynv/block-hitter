@@ -12,8 +12,9 @@ public class Ball : MonoBehaviour
     protected Shooter shooter;
     private Player player;
 
-    private void Start() {
-        shooter = FindObjectOfType<Shooter>();
+    private void Start()
+    {
+        shooter = GameObject.FindGameObjectWithTag("Shooter").GetComponent<Shooter>();  
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
     }
 
@@ -26,9 +27,9 @@ public class Ball : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        // Debug.Log("Bullet hit " + other.tag);
-        if (other.tag == "Player") {
-            shooter.RemoveBall(this);
+        if (other.tag == "Player")
+        {
+            shooter.Balls.Remove(this);
             player.Health -= 1;
             Destroy(gameObject);
         }

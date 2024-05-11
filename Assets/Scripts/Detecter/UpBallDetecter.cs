@@ -4,13 +4,13 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class RightBallDetecter : Detecter
+public class UpBallDetecter : Detecter
 {
    protected override void BallPop()
    {
-      if (Input.GetKeyDown(KeyCode.RightArrow))
+      if (Input.GetKeyDown(KeyCode.UpArrow))
       {
-         PressUpdateScore();
+         PressActionUpdate();
       }
    }
 

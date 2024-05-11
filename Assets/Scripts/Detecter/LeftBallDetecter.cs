@@ -1,12 +1,12 @@
 using UnityEngine;
 
-public class DownBallDetecter : Detecter
+public class LeftBallDetecter : Detecter
 {
    protected override void BallPop()
    {
-      if (Input.GetKeyDown(KeyCode.DownArrow))
+      if (Input.GetKeyDown(KeyCode.LeftArrow))
       {
-         PressUpdateScore();
+         PressActionUpdate();
       }
    }
 

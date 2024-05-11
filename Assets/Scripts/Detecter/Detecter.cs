@@ -33,7 +33,7 @@ public abstract class Detecter : MonoBehaviour
 
    private void OnTriggerEnter2D(Collider2D other)
    {
-      if (other.gameObject.tag == "Ball")
+      if (other.gameObject.tag.CompareTo("Ball") == 0)
       {
          ball = other.gameObject;
          isPoisonBall = ball.GetComponent<PoisonBall>() != null;
@@ -44,7 +44,7 @@ public abstract class Detecter : MonoBehaviour
 
    private void OnTriggerStay2D(Collider2D other)
    {
-      if (other.gameObject.tag == "Ball")
+      if (other.gameObject.tag.CompareTo("Ball") == 0)
       {
          hitPosition = other.transform.position;
       }
@@ -52,69 +52,61 @@ public abstract class Detecter : MonoBehaviour
 
    private void OnTriggerExit2D(Collider2D other)
    {
-      if (other.gameObject.tag == "Ball")
+      if (other.gameObject.tag.CompareTo("Ball") == 0)
       {
          IsCollapsing = false;
       }
    }
-
-   protected float CalculateDistance()
-   {
-      Debug.Log("Distance: " + Vector3.Distance(transform.position, hitPosition));
-      return Vector3.Distance(transform.position, hitPosition);
-   }
-
 
    protected void UpdateScore(string score)
    {
       player.Score += scoreDict[score];
    }
 
-   protected void PressUpdateScore()
+   protected void PressActionUpdate()
    {
       StartCoroutine(CalculateScore());
    }
 
    IEnumerator CalculateScore()
    {
-      if (!isActive) yield break;
-
-      if (!IsCollapsing)
+      if (isActive)
       {
-         Debug.Log("Miss");
-         UpdateScore("Miss");
+         if (!IsCollapsing)
+         {
+            Debug.Log("Miss");
+            UpdateScore("Miss");
 
-         isActive = false;
-         player.GetComponent<SpriteRenderer>().color = Color.red;
-         yield return new WaitForSeconds(1.5f);
-         isActive = true;
-         player.GetComponent<SpriteRenderer>().color = Color.white;
-      }
+            isActive = false;
+            player.GetComponent<SpriteRenderer>().color = Color.red;
+            yield return new WaitForSeconds(1.5f);
+            isActive = true;
+            player.GetComponent<SpriteRenderer>().color = Color.white;
+            yield break;
+         }
 
-      shooter.RemoveBall(ball.GetComponent<Ball>());
-      Destroy(ball);
+         shooter.Balls.Remove(ball.GetComponent<Ball>());
+         Destroy(ball);
 
-      if (isPoisonBall)
-      {
-         UpdateScore("Poison");
-         yield break;
-      }
 
-      float scaleDistance = CalculateDistance();
-      switch (scaleDistance)
-      {
-         case float n when (n <= 0.1f):
-            Debug.Log("Perfect");
-            UpdateScore("Perfect");
-            break;
-         case float n when (n <= 0.3f):
-            Debug.Log("Great");
-            UpdateScore("Great");
-            break;
-         default:
-            Debug.Log("Bad");
-            UpdateScore("Bad");
-            break;
+         if (isPoisonBall)
+         {
+            UpdateScore("Poison");
+         }
+
+         float scaleDistance = Vector3.Distance(transform.position, hitPosition);
+         switch (scaleDistance)
+         {
+            case float n when (n <= 0.1f):
+               UpdateScore("Perfect");
+               break;
+            case float n when (n <= 0.3f):
+               UpdateScore("Great");
+               break;
+            default:
+               UpdateScore("Bad");
+               break;
+         }
       }
    }
 
