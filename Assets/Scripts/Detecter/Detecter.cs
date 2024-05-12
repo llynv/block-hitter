@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Data.Common;
 using UnityEngine;
+using UnityEngine.SocialPlatforms.Impl;
 using UnityEngine.UI;
 
 public abstract class Detecter : MonoBehaviour
@@ -9,23 +10,24 @@ public abstract class Detecter : MonoBehaviour
    public bool IsCollapsing { get; set; } = false;
    public float ballRadius = 0.5f;
 
-   private Dictionary<string, int> scoreDict = new Dictionary<string, int> {
+   private Dictionary<string, int> scoreDict = new()
+   {
       {"Perfect", 100},
       {"Great", 50},
       {"Bad", 20},
-      {"Miss", 0},
-      {"Poison", -50}
+      {"Miss", 0}
    };
+   private ScorePopUpController scorePopUpController;
    private Player player;
    private Vector3 hitPosition = new Vector2();
    private ScoreUI scoreUI;
    private GameObject ball;
    private Shooter shooter;
    private bool isPoisonBall = false;
-   private bool isActive = true;
 
-   private void Start()
+   private void Awake()
    {
+      scorePopUpController = GameObject.FindGameObjectWithTag("ScorePopUp").GetComponent<ScorePopUpController>();
       scoreUI = GameObject.FindGameObjectWithTag("Score").GetComponent<ScoreUI>();
       player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
       shooter = GameObject.FindGameObjectWithTag("Shooter").GetComponent<Shooter>();
@@ -58,29 +60,34 @@ public abstract class Detecter : MonoBehaviour
       }
    }
 
-   protected void UpdateScore(string score)
-   {
-      player.Score += scoreDict[score];
-   }
-
    protected void PressActionUpdate()
    {
       StartCoroutine(CalculateScore());
    }
 
+
+   protected void UpdateScore(string score)
+   {
+      player.Score += scoreDict[score];
+      scorePopUpController.UpdateScoreAmount(score);
+   }
+
+   protected void UpdateHealth()
+   {
+      player.Health -= 1;
+   }
+
    IEnumerator CalculateScore()
    {
-      if (isActive)
+      if (player.GetComponent<SpriteRenderer>().color == Color.white)
       {
          if (!IsCollapsing)
          {
             Debug.Log("Miss");
             UpdateScore("Miss");
 
-            isActive = false;
             player.GetComponent<SpriteRenderer>().color = Color.red;
             yield return new WaitForSeconds(1.5f);
-            isActive = true;
             player.GetComponent<SpriteRenderer>().color = Color.white;
             yield break;
          }
@@ -91,7 +98,7 @@ public abstract class Detecter : MonoBehaviour
 
          if (isPoisonBall)
          {
-            UpdateScore("Poison");
+            UpdateHealth();
          }
 
          float scaleDistance = Vector3.Distance(transform.position, hitPosition);

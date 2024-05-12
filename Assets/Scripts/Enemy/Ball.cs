@@ -12,7 +12,7 @@ public class Ball : MonoBehaviour
     protected Shooter shooter;
     private Player player;
 
-    private void Start()
+    private void Awake()
     {
         shooter = GameObject.FindGameObjectWithTag("Shooter").GetComponent<Shooter>();  
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();

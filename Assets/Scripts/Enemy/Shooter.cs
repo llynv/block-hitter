@@ -24,15 +24,15 @@ public class Shooter : MonoBehaviour
         while (true)
         {
             int randomShooter = Random.Range(0, shooterPosition.Count);
-            float randomBallSpeed = Random.Range(4.5f, 6.5f);
+            float randomBallSpeed = Random.Range(4f, 6f);
             float distance = Vector3.Distance(shooterPosition[randomShooter].transform.position, player.transform.position);
             float timeToReachTarget = distance / randomBallSpeed;
             bool isBallCollapsing = true;
 
-            int loopLimitExceeded = 50;
+            int loopLimitExceeded = 20;
             while (isBallCollapsing && loopLimitExceeded-- > 0)
             {
-                randomBallSpeed = Random.Range(4.5f, 6.5f);
+                randomBallSpeed = Random.Range(4f, 6f);
                 distance = Vector3.Distance(shooterPosition[randomShooter].transform.position, player.transform.position);
                 timeToReachTarget = distance / randomBallSpeed;
                 isBallCollapsing = false;
@@ -58,7 +58,7 @@ public class Shooter : MonoBehaviour
             ball.GetComponent<Ball>().BallSpeed = randomBallSpeed;
             Balls.Add(ball.GetComponent<Ball>());
 
-            float randomTime = Random.Range(.35f, .6f);
+            float randomTime = Random.Range(.6f, .7f);
             yield return new WaitForSeconds(randomTime);
         }
     }
