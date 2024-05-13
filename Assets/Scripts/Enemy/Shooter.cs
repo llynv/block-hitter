@@ -56,6 +56,9 @@ public class Shooter : MonoBehaviour
 
             GameObject ball = Instantiate(ballPrefabs[randomBall], shooterPosition[randomShooter].transform.position, Quaternion.identity) as GameObject;
             ball.GetComponent<Ball>().BallSpeed = randomBallSpeed;
+            if (shooterPosition[randomShooter].transform.name == "Right") {
+                ball.transform.rotation = Quaternion.Euler(180, 0, 180);
+            }
             Balls.Add(ball.GetComponent<Ball>());
 
             float randomTime = Random.Range(.6f, .7f);

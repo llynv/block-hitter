@@ -21,14 +21,10 @@ public class ScorePopUpController : MonoBehaviour
 
    public void UpdateScoreAmount (string score)
    {
-      scoreDictAmount[score] += 1;
       foreach (var key in scoreDictAmount.Keys.ToList())
       {
-         Debug.Log(key + " " + scoreDictAmount[key]);
-         if (key != score) scoreDictAmount[key] = 0;
+         scoreDictAmount[key] = (score == key) ? scoreDictAmount[key] + 1 : 0;
       }
-
-      Debug.Log(scoreDictAmount);
 
       ScorePopUpUI.Create(player.transform.position, score, scoreDictAmount[score]);
    }
