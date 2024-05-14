@@ -14,8 +14,7 @@ public abstract class Detecter : MonoBehaviour
    {
       {"Perfect", 100},
       {"Great", 50},
-      {"Bad", 20},
-      {"Miss", 0}
+      {"Bad", 20}
    };
    private ScorePopUpController scorePopUpController;
    private Player player;
@@ -23,6 +22,7 @@ public abstract class Detecter : MonoBehaviour
    private ScoreUI scoreUI;
    private GameObject ball;
    private Shooter shooter;
+   private PhaseController phaseController;
    private bool isPoisonBall = false;
 
    private void Awake()
@@ -31,6 +31,7 @@ public abstract class Detecter : MonoBehaviour
       scoreUI = GameObject.FindGameObjectWithTag("Score").GetComponent<ScoreUI>();
       player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
       shooter = GameObject.FindGameObjectWithTag("Shooter").GetComponent<Shooter>();
+      phaseController = GameObject.FindGameObjectWithTag("Phase Controller").GetComponent<PhaseController>();
    }
 
    private void OnTriggerEnter2D(Collider2D other)
@@ -83,22 +84,19 @@ public abstract class Detecter : MonoBehaviour
       {
          if (!IsCollapsing)
          {
-            Debug.Log("Miss");
-            UpdateScore("Miss");
-
-            player.GetComponent<SpriteRenderer>().color = Color.red;
-            yield return new WaitForSeconds(1.5f);
+            player.GetComponent<SpriteRenderer>().color = new Color(1f, 0f, 0f, 0.5f);
+            float freezeTime = 3f * phaseController.GetCurrentSpawnRate() / 4f;
+            yield return new WaitForSeconds(freezeTime);
             player.GetComponent<SpriteRenderer>().color = Color.white;
             yield break;
          }
 
-         shooter.Balls.Remove(ball.GetComponent<Ball>());
          Destroy(ball);
-
 
          if (isPoisonBall)
          {
             UpdateHealth();
+            yield break;
          }
 
          float scaleDistance = Vector3.Distance(transform.position, hitPosition);

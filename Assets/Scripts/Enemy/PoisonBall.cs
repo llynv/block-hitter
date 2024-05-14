@@ -9,7 +9,6 @@ public class PoisonBall : Ball
       if (other.gameObject.tag.CompareTo("Player") == 0)
       {
          Destroy(gameObject);
-         shooter.Balls.Remove(this);
       }
    }
 }

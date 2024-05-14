@@ -185,10 +185,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 717b72e153b195c45a2757513f7e02fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isLeft: 0
-  isRight: 0
-  isUp: 0
-  isDown: 0
 --- !u!95 &4153452144818333720
 Animator:
   serializedVersion: 5

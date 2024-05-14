@@ -7,15 +7,14 @@ using Random = UnityEngine.Random;
 
 public class Shooter : MonoBehaviour
 {
-    public List<Ball> Balls { get; set; } = new List<Ball>();
 
     [SerializeField] private List<GameObject> shooterPosition;
     [SerializeField] private List<GameObject> ballPrefabs;
-    private Player player;
+    private PhaseController phaseController;
 
     void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+        phaseController = GameObject.FindGameObjectWithTag("Phase Controller").GetComponent<PhaseController>();
         StartCoroutine(Shoot());
     }
 
@@ -24,45 +23,20 @@ public class Shooter : MonoBehaviour
         while (true)
         {
             int randomShooter = Random.Range(0, shooterPosition.Count);
-            float randomBallSpeed = Random.Range(4f, 6f);
-            float distance = Vector3.Distance(shooterPosition[randomShooter].transform.position, player.transform.position);
-            float timeToReachTarget = distance / randomBallSpeed;
-            bool isBallCollapsing = true;
-
-            int loopLimitExceeded = 20;
-            while (isBallCollapsing && loopLimitExceeded-- > 0)
-            {
-                randomBallSpeed = Random.Range(4f, 6f);
-                distance = Vector3.Distance(shooterPosition[randomShooter].transform.position, player.transform.position);
-                timeToReachTarget = distance / randomBallSpeed;
-                isBallCollapsing = false;
-
-                foreach (Ball currentBall in Balls)
-                {
-                    if (currentBall.TimeToReachTarget - timeToReachTarget <= .35f)
-                    {
-                        isBallCollapsing = true;
-                        break;
-                    }
-                }
-            }
-
-            if (loopLimitExceeded <= 0)
-            {
-                yield return new WaitForSeconds(.15f);
-            }
+            float ballSpeed = phaseController.GetCurrentBallSpeed();
 
             int randomBall = Random.Range(0, ballPrefabs.Count);
 
             GameObject ball = Instantiate(ballPrefabs[randomBall], shooterPosition[randomShooter].transform.position, Quaternion.identity) as GameObject;
-            ball.GetComponent<Ball>().BallSpeed = randomBallSpeed;
+            ball.GetComponent<Ball>().BallSpeed = ballSpeed;    
             if (shooterPosition[randomShooter].transform.name == "Right") {
                 ball.transform.rotation = Quaternion.Euler(180, 0, 180);
             }
-            Balls.Add(ball.GetComponent<Ball>());
 
-            float randomTime = Random.Range(.6f, .7f);
-            yield return new WaitForSeconds(randomTime);
+            phaseController.CurrentNumberOfBalls++;
+
+            float spawnRate = phaseController.GetCurrentSpawnRate();
+            yield return new WaitForSeconds(spawnRate);
         }
     }
 }

@@ -9,6 +9,7 @@ TagManager:
   - Ball
   - Testing
   - ScorePopUp
+  - Phase Controller
   layers:
   - Default
   - TransparentFX

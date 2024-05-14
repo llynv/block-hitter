@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    public bool GetDamage { get; set; } = false;
     private Animator anim;
     private void Awake() {
         anim = GetComponent<Animator>();
@@ -19,6 +20,12 @@ public class PlayerController : MonoBehaviour
             StartCoroutine(ChangeAnimation("isUp", .05f));
         } else if (Input.GetKeyDown(KeyCode.DownArrow)) {
             StartCoroutine(ChangeAnimation("isDown", .05f));
+        }
+
+        if (GetDamage) {
+            Debug.Log("Get Damage");
+            StartCoroutine(ChangeAnimation("isDamage", .05f));
+            GetDamage = false;
         }
     }
 
