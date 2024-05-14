@@ -19,14 +19,14 @@ public class ScorePopUpController : MonoBehaviour
       player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
    }
 
-   public void UpdateScoreAmount (string score)
+   public void UpdateScoreAmount (Vector3 position, string score)
    {
       foreach (var key in scoreDictAmount.Keys.ToList())
       {
          scoreDictAmount[key] = (score == key) ? scoreDictAmount[key] + 1 : 0;
       }
 
-      ScorePopUpUI.Create(player.transform.position, score, scoreDictAmount[score]);
+      ScorePopUpUI.Create(position, score, scoreDictAmount[score]);
    }
 
 }

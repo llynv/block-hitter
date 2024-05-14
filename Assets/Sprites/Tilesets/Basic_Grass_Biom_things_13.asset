@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Basic_Grass_Biom_things_13
   m_EditorClassIdentifier: 
   m_Sprite: {fileID: -7335530, guid: ef0caf9059eafdc4ca3e715a31d36fec, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 0.21290293, b: 0, a: 1}
   m_Transform:
     e00: 1
     e01: 0

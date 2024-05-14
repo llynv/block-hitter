@@ -10,7 +10,7 @@ public class UpBallDetecter : Detecter
    {
       if (Input.GetKeyDown(KeyCode.UpArrow))
       {
-         PressActionUpdate();
+         PressActionUpdate(transform.position);
       }
    }
 

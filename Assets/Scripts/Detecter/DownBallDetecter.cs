@@ -6,7 +6,7 @@ public class DownBallDetecter : Detecter
    {
       if (Input.GetKeyDown(KeyCode.DownArrow))
       {
-         PressActionUpdate();
+         PressActionUpdate(transform.position);
       }
    }
 

@@ -10,7 +10,7 @@ public class RightBallDetecter : Detecter
    {
       if (Input.GetKeyDown(KeyCode.RightArrow))
       {
-         PressActionUpdate();
+         PressActionUpdate(transform.position);
       }
    }
 

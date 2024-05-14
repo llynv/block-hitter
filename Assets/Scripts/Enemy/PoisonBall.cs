@@ -8,6 +8,7 @@ public class PoisonBall : Ball
    {
       if (other.gameObject.tag.CompareTo("Player") == 0)
       {
+         shooter.CurrentNumberOfBalls--;
          Destroy(gameObject);
       }
    }

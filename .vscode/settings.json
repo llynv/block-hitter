@@ -56,5 +56,6 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "block-hitter.sln"
+    "dotnet.defaultSolution": "block-hitter.sln",
+    
 }

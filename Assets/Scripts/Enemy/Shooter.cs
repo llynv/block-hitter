@@ -11,10 +11,15 @@ public class Shooter : MonoBehaviour
     [SerializeField] private List<GameObject> shooterPosition;
     [SerializeField] private List<GameObject> ballPrefabs;
     private PhaseController phaseController;
+    public int CurrentNumberOfBalls { get; set; } = 0;
 
     void Start()
     {
         phaseController = GameObject.FindGameObjectWithTag("Phase Controller").GetComponent<PhaseController>();
+    }
+
+    public void StartAllCoroutine()
+    {
         StartCoroutine(Shoot());
     }
 
@@ -33,6 +38,7 @@ public class Shooter : MonoBehaviour
                 ball.transform.rotation = Quaternion.Euler(180, 0, 180);
             }
 
+            CurrentNumberOfBalls++;
             phaseController.CurrentNumberOfBalls++;
 
             float spawnRate = phaseController.GetCurrentSpawnRate();

@@ -9,7 +9,7 @@ public class ScorePopUpUI : MonoBehaviour
     {
         Transform scorePopUp = Instantiate(GameAssets.Instance.scorePopUpPrefab, position, Quaternion.identity);
         ScorePopUpUI scorePopUpUI = scorePopUp.GetComponent<ScorePopUpUI>();
-        scorePopUpUI.SetText($"{text}! x{scoreAmount}");
+        scorePopUpUI.SetText(text == "Perfect" ? $"{text}! x{scoreAmount}" : $"{text} !");
 
         return scorePopUpUI;
     }

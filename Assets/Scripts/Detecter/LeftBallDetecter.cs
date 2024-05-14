@@ -6,7 +6,7 @@ public class LeftBallDetecter : Detecter
    {
       if (Input.GetKeyDown(KeyCode.LeftArrow))
       {
-         PressActionUpdate();
+         PressActionUpdate(transform.position);
       }
    }
 

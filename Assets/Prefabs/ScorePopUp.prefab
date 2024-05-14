@@ -102,7 +102,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: Perfect x
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: a048b11b23dc2ed4eafb37b0883479b1, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -110,14 +110,14 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4278243839
-  m_fontColor: {r: 0.8301887, g: 0.6807548, b: 0, a: 1}
+  m_fontColor: {r: 0.8773585, g: 0, b: 0.115097575, a: 1}
   m_enableVertexGradient: 1
   m_colorMode: 0
   m_fontColorGradient:
-    topLeft: {r: 1, g: 0.7087463, b: 0, a: 1}
-    topRight: {r: 1, g: 0.7087463, b: 0, a: 1}
-    bottomLeft: {r: 1, g: 0.7087463, b: 0, a: 1}
-    bottomRight: {r: 1, g: 0.7087463, b: 0, a: 1}
+    topLeft: {r: 1, g: 0, b: 0.26024008, a: 1}
+    topRight: {r: 1, g: 0, b: 0.26024008, a: 1}
+    bottomLeft: {r: 1, g: 0, b: 0.26024008, a: 1}
+    bottomRight: {r: 1, g: 0, b: 0.26024008, a: 1}
   m_fontColorGradientPreset: {fileID: 0}
   m_spriteAsset: {fileID: 0}
   m_tintAllSprites: 0
@@ -127,19 +127,19 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 6
-  m_fontSizeBase: 6
+  m_fontSize: 5
+  m_fontSizeBase: 5
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 1
   m_HorizontalAlignment: 2
-  m_VerticalAlignment: 1024
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
-  m_lineSpacing: 0
+  m_lineSpacing: -0.15
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
@@ -169,7 +169,7 @@ MonoBehaviour:
   _SortingLayer: 0
   _SortingLayerID: 0
   _SortingOrder: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_renderer: {fileID: 4912460276769622961}
   m_maskType: 0
 --- !u!114 &4852313689581564206

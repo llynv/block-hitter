@@ -61,16 +61,17 @@ public abstract class Detecter : MonoBehaviour
       }
    }
 
-   protected void PressActionUpdate()
+   protected void PressActionUpdate(Vector3 position)
    {
-      StartCoroutine(CalculateScore());
+      if (player.isDisabling) return;
+      StartCoroutine(CalculateScore(position));
    }
 
 
-   protected void UpdateScore(string score)
+   protected void UpdateScore(Vector3 position, string score)
    {
       player.Score += scoreDict[score];
-      scorePopUpController.UpdateScoreAmount(score);
+      scorePopUpController.UpdateScoreAmount(position, score);
    }
 
    protected void UpdateHealth()
@@ -78,19 +79,20 @@ public abstract class Detecter : MonoBehaviour
       player.Health -= 1;
    }
 
-   IEnumerator CalculateScore()
+   IEnumerator CalculateScore(Vector3 position)
    {
       if (player.GetComponent<SpriteRenderer>().color == Color.white)
       {
          if (!IsCollapsing)
          {
-            player.GetComponent<SpriteRenderer>().color = new Color(1f, 0f, 0f, 0.5f);
+            player.GetComponent<SpriteRenderer>().color = new Color(255, 0f, 0f, 0.5f);
             float freezeTime = 3f * phaseController.GetCurrentSpawnRate() / 4f;
             yield return new WaitForSeconds(freezeTime);
             player.GetComponent<SpriteRenderer>().color = Color.white;
             yield break;
          }
 
+         shooter.CurrentNumberOfBalls--;
          Destroy(ball);
 
          if (isPoisonBall)
@@ -103,13 +105,13 @@ public abstract class Detecter : MonoBehaviour
          switch (scaleDistance)
          {
             case float n when (n <= 0.1f):
-               UpdateScore("Perfect");
+               UpdateScore(position, "Perfect");
                break;
             case float n when (n <= 0.3f):
-               UpdateScore("Great");
+               UpdateScore(position, "Great");
                break;
             default:
-               UpdateScore("Bad");
+               UpdateScore(position, "Bad");
                break;
          }
       }
