@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public bool GetDamage { get; set; } = false;
+    public bool getDamage = false;
     private Animator anim;
     private Player player;
     private void Awake() {
@@ -14,26 +14,26 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        if (getDamage) {
+            StopAllCoroutines();
+            StartCoroutine(ChangeAnimation("isDamage", .025f));
+            getDamage = false;
+        }
+
         if (player.isDisabling) return;
 
         if (Input.GetKeyDown(KeyCode.LeftArrow)) {
             StopAllCoroutines();
-            StartCoroutine(ChangeAnimation("isLeft", .05f));
+            StartCoroutine(ChangeAnimation("isLeft", .025f));
         } else if (Input.GetKeyDown(KeyCode.RightArrow)) {
             StopAllCoroutines();
-            StartCoroutine(ChangeAnimation("isRight", .05f));
+            StartCoroutine(ChangeAnimation("isRight", .025f));
         } else if (Input.GetKeyDown(KeyCode.UpArrow)) {
             StopAllCoroutines();
-            StartCoroutine(ChangeAnimation("isUp", .05f));
+            StartCoroutine(ChangeAnimation("isUp", .025f));
         } else if (Input.GetKeyDown(KeyCode.DownArrow)) {
             StopAllCoroutines();
-            StartCoroutine(ChangeAnimation("isDown", .05f));
-        }
-
-        if (GetDamage) {
-            StopAllCoroutines();
-            StartCoroutine(ChangeAnimation("isDamage", .05f));
-            GetDamage = false;
+            StartCoroutine(ChangeAnimation("isDown", .025f));
         }
     }
 

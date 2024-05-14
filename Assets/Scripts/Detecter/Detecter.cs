@@ -1,9 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Data.Common;
 using UnityEngine;
-using UnityEngine.SocialPlatforms.Impl;
-using UnityEngine.UI;
 
 public abstract class Detecter : MonoBehaviour
 {
@@ -85,10 +82,12 @@ public abstract class Detecter : MonoBehaviour
       {
          if (!IsCollapsing)
          {
-            player.GetComponent<SpriteRenderer>().color = new Color(255, 0f, 0f, 0.5f);
+            player.GetComponent<SpriteRenderer>().color = new Color(0.5f, 0.5f, 0, 0.6f);
             float freezeTime = 3f * phaseController.GetCurrentSpawnRate() / 4f;
+            player.isDisabling = true;
             yield return new WaitForSeconds(freezeTime);
             player.GetComponent<SpriteRenderer>().color = Color.white;
+            player.isDisabling = false;
             yield break;
          }
 

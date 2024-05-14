@@ -27,7 +27,7 @@ public class Ball : MonoBehaviour
     {
         if (other.tag == "Player")
         {
-            player.GetComponent<PlayerController>().GetDamage = true;
+            player.GetComponent<PlayerController>().getDamage = true;
             player.Health -= 1;
             shooter.CurrentNumberOfBalls--;
             Destroy(gameObject);
