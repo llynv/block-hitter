@@ -29,6 +29,7 @@ public class Ball : MonoBehaviour
         {
             player.GetComponent<PlayerController>().getDamage = true;
             player.Health -= 1;
+            Debug.Log("Player Health: " + player.Health);
             shooter.CurrentNumberOfBalls--;
             Destroy(gameObject);
         }

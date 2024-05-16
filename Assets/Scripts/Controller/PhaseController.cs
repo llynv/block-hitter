@@ -46,6 +46,7 @@ public class PhaseController : MonoBehaviour
 
    private bool isFirstEntry = false;
    private float waitingTime = 2f;
+   private float changePhaseTime = 1f;
 
    private void Update()
    {
@@ -54,6 +55,10 @@ public class PhaseController : MonoBehaviour
       if (phaseType == PhaseType.UI)
       {
          if (shooter.CurrentNumberOfBalls > 0) return;
+
+         changePhaseTime -= Time.deltaTime;
+
+         if (changePhaseTime > 0 && Phase != 1) return;
 
          Camera.main.GetComponent<PostProcessVolume>().enabled = true;
 
@@ -95,6 +100,8 @@ public class PhaseController : MonoBehaviour
          player.isDisabling = false;
          timer.isTimerActive = true;
          shooter.StartAllCoroutine();
+
+         changePhaseTime = 1f;
       }
       else
       {

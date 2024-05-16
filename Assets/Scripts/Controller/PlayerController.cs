@@ -7,40 +7,65 @@ public class PlayerController : MonoBehaviour
     public bool getDamage = false;
     private Animator anim;
     private Player player;
-    private void Awake() {
+    private string currentAnimation = "";
+
+    private void Awake()
+    {
         anim = GetComponent<Animator>();
         player = GetComponent<Player>();
+        currentAnimation = "player-idle";
     }
+
+    private const float defaultAnimTime = .2f;
+
+    private float animTime = defaultAnimTime;
 
     void Update()
     {
-        if (getDamage) {
-            StopAllCoroutines();
-            StartCoroutine(ChangeAnimation("isDamage", .025f));
+        animTime -= Time.deltaTime;
+
+        if (animTime <= 0f)
+        {
+            ChangeAnimation("player-idle", .025f);
+            animTime = 0f;
+        }
+
+        if (getDamage)
+        {
+            ChangeAnimation("damage", .025f);
+            animTime = defaultAnimTime;
             getDamage = false;
         }
 
+        anim.Play(currentAnimation);
+
         if (player.isDisabling) return;
 
-        if (Input.GetKeyDown(KeyCode.LeftArrow)) {
-            StopAllCoroutines();
-            StartCoroutine(ChangeAnimation("isLeft", .025f));
-        } else if (Input.GetKeyDown(KeyCode.RightArrow)) {
-            StopAllCoroutines();
-            StartCoroutine(ChangeAnimation("isRight", .025f));
-        } else if (Input.GetKeyDown(KeyCode.UpArrow)) {
-            StopAllCoroutines();
-            StartCoroutine(ChangeAnimation("isUp", .025f));
-        } else if (Input.GetKeyDown(KeyCode.DownArrow)) {
-            StopAllCoroutines();
-            StartCoroutine(ChangeAnimation("isDown", .025f));
+        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            ChangeAnimation("left-hit", .025f);
+            animTime = defaultAnimTime;
+        }
+        else if (Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            ChangeAnimation("right-hit", .025f);
+            animTime = defaultAnimTime;
+        }
+        else if (Input.GetKeyDown(KeyCode.UpArrow))
+        {
+            ChangeAnimation("up-hit", .025f);
+            animTime = defaultAnimTime;
+        }
+        else if (Input.GetKeyDown(KeyCode.DownArrow))
+        {
+            ChangeAnimation("down-hit", .025f);
+            animTime = defaultAnimTime;
         }
     }
 
-    IEnumerator ChangeAnimation(string boolName, float delay)
+    void ChangeAnimation(string animation, float delay)
     {
-        anim.SetBool(boolName, true);
-        yield return new WaitForSeconds(delay);
-        anim.SetBool(boolName, false);
+        currentAnimation = animation;
+        anim.CrossFade(animation, delay);
     }
 }

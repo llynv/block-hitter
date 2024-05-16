@@ -8,7 +8,6 @@ public class Player : MonoBehaviour
     public bool isDisabling = false;
 
     private Health health;
-
     private void Awake() {
         health = GetComponent<Health>();
     }
