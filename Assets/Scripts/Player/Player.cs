@@ -19,8 +19,7 @@ public class Player : MonoBehaviour
         if (Health <= 0)
         {
             Debug.Log("Game Over");
-            Scene scene = SceneManager.GetActiveScene(); 
-            SceneManager.LoadScene(scene.name);
+            SceneManager.LoadScene("EndScene");
         }
     }
 }

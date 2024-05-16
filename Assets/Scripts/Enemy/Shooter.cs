@@ -27,6 +27,9 @@ public class Shooter : MonoBehaviour
     {
         while (true)
         {
+            float spawnRate = phaseController.GetCurrentSpawnRate();
+            yield return new WaitForSeconds(spawnRate);
+
             int randomShooter = Random.Range(0, shooterPosition.Count);
             float ballSpeed = phaseController.GetCurrentBallSpeed();
 
@@ -40,9 +43,6 @@ public class Shooter : MonoBehaviour
 
             CurrentNumberOfBalls++;
             phaseController.CurrentNumberOfBalls++;
-
-            float spawnRate = phaseController.GetCurrentSpawnRate();
-            yield return new WaitForSeconds(spawnRate);
         }
     }
 }

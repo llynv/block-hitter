@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Analytics;
+using UnityEngine.Rendering.PostProcessing;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
@@ -18,15 +19,15 @@ public class PhaseController : MonoBehaviour
    private readonly List<int> numberOfBalls = new() { 10, 15, 20, 25, 30, 35, 40, 45, 50 };
    private PhaseUI phaseUI;
    private RectTransform canvasRectTransform;
-   private RawImage blackScreen;
    private Shooter shooter;
    private Player player;
    private Timer timer;
-   float speedRate = 300f;
+   float speedRate = 500f;
    public enum PhaseType
    {
       UI,
-      InPhase
+      InPhase,
+      Waiting
    }
 
    public PhaseType phaseType { get; private set; } = PhaseType.UI;
@@ -35,7 +36,6 @@ public class PhaseController : MonoBehaviour
    {
       phaseUI = GameObject.FindGameObjectWithTag("PhaseUI").GetComponent<PhaseUI>();
       canvasRectTransform = GameObject.FindGameObjectWithTag("Canvas").GetComponent<RectTransform>();
-      blackScreen = GameObject.FindGameObjectWithTag("Black").GetComponent<RawImage>();
       shooter = GameObject.FindGameObjectWithTag("Shooter").GetComponent<Shooter>();
       player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
       timer = GameObject.FindGameObjectWithTag("Timer").GetComponent<Timer>();
@@ -49,14 +49,16 @@ public class PhaseController : MonoBehaviour
 
    private void Update()
    {
+      if (phaseType == PhaseType.Waiting) return;
+
       if (phaseType == PhaseType.UI)
       {
          if (shooter.CurrentNumberOfBalls > 0) return;
 
-         phaseUI.GetComponent<TextMeshProUGUI>().color = new Color32(10, 255, 22, 255);
+         Camera.main.GetComponent<PostProcessVolume>().enabled = true;
 
-         blackScreen.enabled = true;
-         blackScreen.transform.localScale = canvasRectTransform.localScale;
+         phaseUI.GetComponent<TextMeshProUGUI>().color = new Color32(210, 20, 20, 255);
+
          player.isDisabling = true;
          timer.isTimerActive = false;
 
@@ -83,12 +85,13 @@ public class PhaseController : MonoBehaviour
          }
 
          phaseType = PhaseType.InPhase;
-         
+
+         Camera.main.GetComponent<PostProcessVolume>().enabled = false;
+
          phaseUI.GetComponent<TextMeshProUGUI>().color = new Color32(255, 25, 0, 255);
          phaseUI.GetComponent<TextMeshProUGUI>().fontSize = 36;
 
          isFirstEntry = false;
-         blackScreen.enabled = false;
          player.isDisabling = false;
          timer.isTimerActive = true;
          shooter.StartAllCoroutine();
