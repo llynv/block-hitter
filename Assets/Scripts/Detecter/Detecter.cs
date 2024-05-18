@@ -97,6 +97,7 @@ public abstract class Detecter : MonoBehaviour
          if (isPoisonBall)
          {
             UpdateHealth();
+            player.GetComponent<PlayerController>().getDamage = true;
             yield break;
          }
 

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.Analytics;
 using UnityEngine.Rendering.PostProcessing;
@@ -40,7 +41,7 @@ public class PhaseController : MonoBehaviour
       player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
       timer = GameObject.FindGameObjectWithTag("Timer").GetComponent<Timer>();
 
-      initPosition = phaseUI.transform.position;
+      initPosition = new Vector3(Screen.width / 2, Screen.height, 0);
       centrePosition = new Vector3(Screen.width / 2, 3f * Screen.height / 5f, 0);
    }
 
@@ -50,6 +51,8 @@ public class PhaseController : MonoBehaviour
 
    private void Update()
    {
+      initPosition = new Vector3(Screen.width / 2, Screen.height, 0);
+
       if (phaseType == PhaseType.Waiting) return;
 
       if (phaseType == PhaseType.UI)
@@ -85,7 +88,7 @@ public class PhaseController : MonoBehaviour
          if (phaseUI.transform.position != initPosition)
          {
             phaseUI.transform.position = Vector3.MoveTowards(phaseUI.transform.position, initPosition, speedRate * Time.deltaTime);
-            phaseUI.GetComponent<TextMeshProUGUI>().fontSize = Mathf.Lerp(phaseUI.GetComponent<TextMeshProUGUI>().fontSize, 36, 0.004f);
+            phaseUI.GetComponent<TextMeshProUGUI>().fontSize = Mathf.Lerp(phaseUI.GetComponent<TextMeshProUGUI>().fontSize, 36, Time.deltaTime);
             return;
          }
 
@@ -119,9 +122,14 @@ public class PhaseController : MonoBehaviour
       return Phase > ballSpeeds.Count ? ballSpeeds[^1] : ballSpeeds[Phase - 1];
    }
 
+   public int GetCurrentNumberOfBalls()
+   {
+      return Phase > numberOfBalls.Count ? numberOfBalls[^1] : numberOfBalls[Phase - 1];
+   }
+
    public void NextPhase()
    {
-      if (CurrentNumberOfBalls >= numberOfBalls[Phase])
+      if (CurrentNumberOfBalls >= GetCurrentNumberOfBalls())
       {
          Phase++;
          CurrentNumberOfBalls = 0;

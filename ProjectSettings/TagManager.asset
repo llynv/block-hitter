@@ -15,6 +15,7 @@ TagManager:
   - Black
   - Timer
   - CM Cam
+  - KeyPress
   layers:
   - Default
   - TransparentFX

@@ -16,7 +16,7 @@ public class PlayerController : MonoBehaviour
         currentAnimation = "player-idle";
     }
 
-    private const float defaultAnimTime = .2f;
+    private const float defaultAnimTime = .33f;
 
     private float animTime = defaultAnimTime;
 
@@ -39,7 +39,9 @@ public class PlayerController : MonoBehaviour
 
         anim.Play(currentAnimation);
 
-        if (player.isDisabling) return;
+        if (player.isDisabling) {
+            return;
+        }
 
         if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
