@@ -23,6 +23,7 @@ public class PhaseController : MonoBehaviour
    private Shooter shooter;
    private Player player;
    private Timer timer;
+   private ScorePopUpController scorePopUpController;
    float speedRate = 500f;
    public enum PhaseType
    {
@@ -40,6 +41,7 @@ public class PhaseController : MonoBehaviour
       shooter = GameObject.FindGameObjectWithTag("Shooter").GetComponent<Shooter>();
       player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
       timer = GameObject.FindGameObjectWithTag("Timer").GetComponent<Timer>();
+      scorePopUpController = GameObject.FindGameObjectWithTag("ScorePopUp").GetComponent<ScorePopUpController>();
 
       initPosition = new Vector3(Screen.width / 2, Screen.height, 0);
       centrePosition = new Vector3(Screen.width / 2, 3f * Screen.height / 5f, 0);
@@ -134,6 +136,7 @@ public class PhaseController : MonoBehaviour
          Phase++;
          CurrentNumberOfBalls = 0;
          phaseType = PhaseType.UI;
+         scorePopUpController.ResetScore();
          shooter.StopAllCoroutines();
       }
    }

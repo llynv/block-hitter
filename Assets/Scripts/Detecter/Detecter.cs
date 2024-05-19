@@ -68,6 +68,7 @@ public abstract class Detecter : MonoBehaviour
    protected void UpdateScore(Vector3 position, string score)
    {
       player.Score += scoreDict[score];
+      // Debug.Log(score + " " + position);
       scorePopUpController.UpdateScoreAmount(position, score);
    }
 

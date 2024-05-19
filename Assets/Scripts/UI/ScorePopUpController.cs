@@ -13,10 +13,11 @@ public class ScorePopUpController : MonoBehaviour
       {"Miss", 0}
    };
 
-   private Player player;
-
-   private void Start() {
-      player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+   public void ResetScore() {
+      foreach (var key in scoreDictAmount.Keys.ToList())
+      {
+         scoreDictAmount[key] = 0;
+      }
    }
 
    public void UpdateScoreAmount (Vector3 position, string score)

@@ -5,8 +5,9 @@ using UnityEngine.UI;
 
 public class OnOffButton : MonoBehaviour
 {
-    public Sprite[] images;
-    private List<bool> states = new List<bool>();
+    public Sprite onImage;
+    public Sprite offImage;
+    
 
     public enum ButtonState {
         On,
@@ -15,20 +16,15 @@ public class OnOffButton : MonoBehaviour
 
     protected ButtonState State;
 
-    protected void Start() {
-        foreach (var image in images) {
-            states.Add(image == gameObject.GetComponent<Image>().sprite);
-        }
+    protected void Awake() {
+        OnClick();
     }
 
     public void OnClick() {
-        Sprite enableImage = null;
-        for (int index = 0; index < images.Length; index++) {
-            states[index] = !states[index];
-            if (states[index]) {
-                enableImage = images[index];
-            }
+        if (State == ButtonState.On) {
+            gameObject.GetComponent<Image>().sprite = onImage;
+        } else {
+            gameObject.GetComponent<Image>().sprite = offImage;
         }
-        gameObject.GetComponent<Image>().sprite = enableImage;
     }
 }

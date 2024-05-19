@@ -16,6 +16,7 @@ TagManager:
   - Timer
   - CM Cam
   - KeyPress
+  - SettingPanel
   layers:
   - Default
   - TransparentFX

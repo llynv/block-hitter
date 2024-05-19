@@ -7,16 +7,27 @@ public class KeyPress : OnOffButton
     [SerializeField] private GameObject keyboardPressController;
 
     private GameObject[] keys;
-    private bool isOn = true, isOff = false;
+    private bool isOn, isOff;
 
-    private new void Start() {
-        base.Start();
-        base.State = ButtonState.On;
+    private new void Awake() {
+        isOn = GameStaticController.isKeyBoardPress;
+        isOff = !isOn;
+        base.State = isOn ? ButtonState.On : ButtonState.Off;
+        base.Awake();
         keys = GameObject.FindGameObjectsWithTag("KeyPress");
+        // Debug.Log(keys.Length);
+        ButtonStateChange();
     }
 
 
-    private void Update() {
+
+    public void SwitchButton () {
+        base.State = (base.State == ButtonState.On) ? ButtonState.Off : ButtonState.On;
+        base.OnClick();
+        ButtonStateChange();
+    }
+
+    private void ButtonStateChange() {
         if (base.State == ButtonState.On) {
             if (!isOn) return;
             keyboardPressController.SetActive(true);
@@ -34,10 +45,5 @@ public class KeyPress : OnOffButton
             isOn = true;
             isOff = false;
         }
-    }
-
-    public void SwitchButton () {
-        base.OnClick();
-        base.State = (State == ButtonState.On) ? ButtonState.Off : ButtonState.On;
     }
 }
